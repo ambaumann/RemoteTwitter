@@ -31,6 +31,7 @@ public class Main {
 			
 			
 				System.out.println("Yo");
+				System.out.println(System.getProperty("user.home"));
 				try {
 					Thread.sleep(120 * 1000);
 				} catch (InterruptedException e) {
