@@ -1,5 +1,4 @@
 package edu.hacks.good;
-import java.io.IOException;
 
 import twitter4j.Paging;
 import twitter4j.ResponseList;
@@ -24,12 +23,6 @@ public class Main {
 		
 		//twitter.addListener(listener);
 		while(true){
-			try {
-				twitter.verifyCredentials();
-			} catch (TwitterException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			Paging paging = new Paging();
 			paging.setCount(1);
 			try {
@@ -47,34 +40,8 @@ public class Main {
 			}
 		}
 	}
-	private static void shutdown() {
-		Runtime runtime = Runtime.getRuntime();
-		try {
-			runtime.exec("shutdown -s -t 0");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.exit(0);
-	}
 	
 	private static void handleStatus(Twitter twitter, Status status) {
-		System.out.println("doing nothing");
-		switch(status.getText()){
-			case "Restart":
-			try {
-				twitter.destroyStatus(0);
-			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				shutdown();
-				break;
-			default:
-				System.out.println("doing nothing");
-				break;
-		}
-		System.out.println("doing nothing");
-		
+		CommandHandlerFactory.getCommandHandler(CommandParser.parseCommand(status.toString())).handleCommand();
 	}
 }
