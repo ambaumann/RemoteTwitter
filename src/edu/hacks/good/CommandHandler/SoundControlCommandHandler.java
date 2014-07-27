@@ -14,8 +14,19 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.Mixer.Info;
 
-public class SoundControlCommandHandler {
+import com.google.common.base.Preconditions;
 
+import twitter4j.Status;
+import edu.hacks.good.SystemCommand;
+
+public class SoundControlCommandHandler implements CommandHandler {
+	
+	public static SoundControlCommandHandler create(){
+		return new SoundControlCommandHandler();
+	}
+
+	private SoundControlCommandHandler(){}
+	
 	public static void setMasterOutputVolume(float value) {
 		if (value < 0 || value > 1)
 			throw new IllegalArgumentException(
@@ -27,10 +38,9 @@ public class SoundControlCommandHandler {
 		boolean opened = open(line);
 		try {
 			FloatControl control = getVolumeControl(line);
-			if (control == null)
-				throw new RuntimeException(
-						"Volume control not found in master port: "
-								+ toString(line));
+			Preconditions.checkNotNull(control,
+					"Volume control not found in master port: "
+								+ toString(line) );
 			control.setValue(value);
 		} finally {
 			if (opened)
@@ -91,7 +101,8 @@ public class SoundControlCommandHandler {
 	public static Line getMasterOutputLine() {
 		for (Mixer mixer : getMixers()) {
 			for (Line line : getAvailableOutputLines(mixer)) {
-				if (line.getLineInfo().toString().contains("Master"))
+				System.out.println(line.getLineInfo());
+				if (line.getLineInfo().toString().contains("SPEAKER"))
 					return line;
 			}
 		}
@@ -249,6 +260,21 @@ public class SoundControlCommandHandler {
 		sb.append(" (").append(info.getDescription()).append(")");
 		sb.append(mixer.isOpen() ? " [open]" : " [closed]");
 		return sb.toString();
+	}
+
+	@Override
+	public SystemCommand getCommandType() {
+		return SystemCommand.VOLUME;
+	}
+
+	@Override
+	public void handleCommand(Status status) {
+		String[] strings = status.getText().split("\\s+");
+		Preconditions.checkArgument(strings.length == 2, "Incorrect number of arguments.");
+		float volume = new Float(strings[1]);
+		volume = volume/100;
+		setMasterOutputVolume(volume);
+		
 	}
 
 }

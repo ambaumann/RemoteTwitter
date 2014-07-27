@@ -5,5 +5,6 @@ public enum SystemCommand {
 	RESTART,
 	SLEEP,
 	LOCK,
-	ILLEGAL_COMMAND;
+	ILLEGAL_COMMAND,
+	VOLUME;
 }
