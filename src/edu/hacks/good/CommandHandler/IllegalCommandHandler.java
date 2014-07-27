@@ -1,5 +1,6 @@
 package edu.hacks.good.CommandHandler;
 
+import twitter4j.Status;
 import edu.hacks.good.SystemCommand;
 
 public class IllegalCommandHandler implements CommandHandler {
@@ -16,7 +17,7 @@ public class IllegalCommandHandler implements CommandHandler {
 	}
 
 	@Override
-	public void handleCommand() {
+	public void handleCommand(Status status) {
 		System.out.println("Illegal Command. Doing Nothing.");
 		
 	}
