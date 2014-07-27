@@ -6,5 +6,6 @@ public enum SystemCommand {
 	SLEEP,
 	LOCK,
 	ILLEGAL_COMMAND,
-	VOLUME;
+	VOLUME,
+	SCRIPT;
 }

@@ -274,7 +274,6 @@ public class SoundControlCommandHandler implements CommandHandler {
 		float volume = new Float(strings[1]);
 		volume = volume/100;
 		setMasterOutputVolume(volume);
-		
 	}
 
 }

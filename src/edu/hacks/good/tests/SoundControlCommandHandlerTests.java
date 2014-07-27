@@ -19,6 +19,7 @@ import edu.hacks.good.CommandHandler.SoundControlCommandHandler;
 
 public class SoundControlCommandHandlerTests {
 
+	@SuppressWarnings("serial")
 	@Test
 	public void testSoundIsTurnedAllTheWayUp(){
 		SoundControlCommandHandler handler = SoundControlCommandHandler.create();

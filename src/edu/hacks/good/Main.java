@@ -28,9 +28,6 @@ public class Main {
 					e.printStackTrace();
 				}
 				
-			
-			
-				System.out.println("Yo");
 				System.out.println(System.getProperty("user.home"));
 				try {
 					Thread.sleep(120 * 1000);
@@ -40,8 +37,6 @@ public class Main {
 				}
 		}
 	}
-		
-	
 	
 	private static void handleStatus(Twitter twitter, Status status) {
 		System.out.println(status.toString() +" " + status.toString());

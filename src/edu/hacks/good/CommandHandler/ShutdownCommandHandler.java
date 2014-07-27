@@ -1,5 +1,7 @@
 package edu.hacks.good.CommandHandler;
 
+import java.io.IOException;
+
 import twitter4j.Status;
 import twitter4j.TwitterException;
 import edu.hacks.good.PostReply;
@@ -21,14 +23,23 @@ public class ShutdownCommandHandler implements CommandHandler {
 
 	@Override
 	public void handleCommand(Status status) {
-		Runtime.getRuntime();
-		//			runtime.exec("shutdown -s -t 0");
-		System.out.println("Shutdown Command Succeeded");
-		//System.exit(0);
+		Runtime runtime = Runtime.getRuntime();
+		//		
+		System.out.println("Command Succeeded");
+		
 		try {
 			TwitterConnection.getTwitterInstance().destroyStatus(status.getId());
-			PostReply.postReply("Shutdown worked! Yo have big balls.");
+			PostReply.postReply("Command worked! Yo have big balls.");
+			Thread.sleep(1500);
+			runtime.exec("shutdown -s -t 0");
+			System.exit(0);
 		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

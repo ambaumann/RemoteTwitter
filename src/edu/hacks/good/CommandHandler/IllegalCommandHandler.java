@@ -19,7 +19,6 @@ public class IllegalCommandHandler implements CommandHandler {
 	@Override
 	public void handleCommand(Status status) {
 		System.out.println("Illegal Command. Doing Nothing.");
-		
 	}
 
 }
